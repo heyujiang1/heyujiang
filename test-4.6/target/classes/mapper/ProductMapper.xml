@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.he.dao.ProductMapper">
+    <select id="queryProduct" resultType="com.he.pojo.Product" >
+        select * from mybatis.product;
+    </select>
+    <select id="queryProduct1" parameterType="int" resultMap="product-catagory">
+        select * from mybatis.product,mybatis.category
+        where product.typeid=category.id and category.id=#{id};
+    </select>
+    <resultMap id="product-catagory" type="com.he.pojo.Product">
+        <id property="id" column="id"/>
+        <result property="goodsname" column="goodsname"/>
+        <result property="price" column="price"/>
+        <collection property="catagory" ofType="com.he.pojo.Catagory">
+            <id property="id" column="id"/>
+            <result property="typename" column="typename"/>
+        </collection>
+    </resultMap>
+    <select id="queryProduct3" parameterType="int" resultMap="product-catagory1">
+        select * from mybatis.product where product.typeid=#{typeid};
+    </select>
+    <resultMap id="product-catagory1" type="com.he.pojo.Product">
+        <id property="id" column="id"/>
+        <result property="goodsname" column="goodsname"/>
+        <result property="price" column="price"/>
+        <collection property="catagory" column="typeid" ofType="com.he.pojo.Catagory" select="com.he.dao.CatagoryMapper.queryCatagory" javaType="com.he.pojo.Catagory"/>
+    </resultMap>
+</mapper>

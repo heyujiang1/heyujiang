@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.he.dao.EmployeeMapper">
+    <select id="GetUserById" resultType="com.he.pojo.Employee" parameterType="int">
+        select * from mybatis.employee where id=#{id};
+    </select>
+    <insert id="addEmployeeInformation" parameterType="com.he.pojo.Employee" keyProperty="id" useGeneratedKeys="true">
+        insert into mybatis.employee(id,age,name,position) values(#{id},#{age},#{name},#{position});
+    </insert>
+    <update id="updateEmployeeInformationById" parameterType="com.he.pojo.Employee">
+        update mybatis.employee set name=#{name},age=#{age},position=#{position} where id=#{id};
+    </update>
+    <delete id="deleteEmployeeInformationById" parameterType="int">
+        delete from mybatis.employee where id=#{id};
+    </delete>
+</mapper>
+
